@@ -5,15 +5,16 @@ import { Database, MongoDBConnector } from "denodb";
 import { User } from "@/models/user.ts";
 import { usersRouter } from "@/routes/user.route.ts";
 
+console.log(Deno.env.toObject());
 const envVars = await config();
 
-if (Deno.env.toObject().ENV !== "development") {
-  console.log("envVars", envVars);
-  envVars.DB_SERVERS = Deno.env.get("DB_SERVERS") || envVars.DB_SERVERS;
-  envVars.DB_NAME = Deno.env.get("DB_NAME") || envVars.DB_NAME;
-  envVars.DB_USERNAME = Deno.env.get("DB_USERNAME") || envVars.DB_USERNAME;
-  envVars.DB_PASSWORD = Deno.env.get("DB_PASSWORD") || envVars.DB_PASSWORD;
-}
+// if (Deno.env.toObject().ENV !== "development") {
+//   console.log("envVars", envVars);
+//   envVars.DB_SERVERS = Deno.env.get("DB_SERVERS") || envVars.DB_SERVERS;
+//   envVars.DB_NAME = Deno.env.get("DB_NAME") || envVars.DB_NAME;
+//   envVars.DB_USERNAME = Deno.env.get("DB_USERNAME") || envVars.DB_USERNAME;
+//   envVars.DB_PASSWORD = Deno.env.get("DB_PASSWORD") || envVars.DB_PASSWORD;
+// }
 
 console.log("envVars", Deno.env.get("DB_SERVERS"));
 const dbUris = JSON.parse(envVars.DB_SERVERS);
