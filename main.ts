@@ -11,7 +11,7 @@ console.log(
   dbUris,
   envVars,
   Deno.env.toObject(),
-  Deno.env.get("DB_SERVERS"),
+  Deno.env?.get("DB_SERVERS"),
   Deno.env
 );
 
