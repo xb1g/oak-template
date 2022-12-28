@@ -6,13 +6,7 @@ import { User } from "@/models/user.ts";
 import { usersRouter } from "@/routes/user.route.ts";
 const envVars = (await config()) || Deno.env;
 const dbUris = JSON.parse(envVars.DB_SERVERS);
-// const connector = new MongoDBConnector({
-//   uri:
-//     "mongodb+srv://xb1g:SecurePassword555@cluster0.karrdyx.mongodb.net/?retryWrites=true&w=majority" ||
-//     // envVars.DATABASE_URL,
-//     "mongodb://localhost:27017",
-//   database: "test",
-// });
+
 const connector = new MongoDBConnector({
   database: envVars.DB_NAME,
   tls: true,
