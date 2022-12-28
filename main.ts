@@ -5,8 +5,12 @@ import { Database, MongoDBConnector } from "denodb";
 import { User } from "@/models/user.ts";
 import { usersRouter } from "@/routes/user.route.ts";
 
-console.log(Deno.env.toObject());
-const envVars = await config();
+const deployEnvs = Deno.env.toObject();
+let envVars = await config();
+
+if (deployEnvs.DENO_DEPLOYMENT_ID) {
+  envVars = deployEnvs;
+}
 
 // if (Deno.env.toObject().ENV !== "development") {
 //   console.log("envVars", envVars);
