@@ -1,12 +1,11 @@
 import { Application, Router } from "oak";
-import { config } from "dotenv";
+import "loadenv";
 
 import { Database, MongoDBConnector } from "denodb";
 import { User } from "@/models/user.ts";
 import { usersRouter } from "@/routes/user.route.ts";
 
-const envVars = await config();
-
+const envVars = Deno.env.toObject();
 // if (Deno.env.toObject().ENV !== "development") {
 //   console.log("envVars", envVars);
 //   envVars.DB_SERVERS = Deno.env.get("DB_SERVERS") || envVars.DB_SERVERS;
@@ -15,8 +14,8 @@ const envVars = await config();
 //   envVars.DB_PASSWORD = Deno.env.get("DB_PASSWORD") || envVars.DB_PASSWORD;
 // }
 
-console.log("envVars", Deno.env.get("DB_SERVERS"));
-const dbUris = JSON.parse(envVars.DB_SERVERS || Deno.env.get("DB_SERVERS")!);
+console.log("envVars", JSON.parse(envVars.DB_SERVERS));
+const dbUris = JSON.parse(envVars.DB_SERVERS);
 
 const connector = new MongoDBConnector({
   database: envVars.DB_NAME || Deno.env.get("DB_NAME")!,
