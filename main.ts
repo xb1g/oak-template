@@ -5,15 +5,13 @@ import { Database, MongoDBConnector } from "denodb";
 import { User } from "@/models/user.ts";
 import { usersRouter } from "@/routes/user.route.ts";
 
-const envVars = (await config()) || Deno.env.toObject();
+const envVars = (await config()) || {
+  DB_SERVERS: Deno.env.get("DB_SERVERS"),
+  DB_NAME: Deno.env.get("DB_NAME"),
+  DB_USERNAME: Deno.env.get("DB_USERNAME"),
+  DB_PASSWORD: Deno.env.get("DB_PASSWORD"),
+};
 const dbUris = JSON.parse(envVars.DB_SERVERS);
-console.log(
-  dbUris,
-  envVars,
-  Deno.env.toObject(),
-  Deno.env?.get("DB_SERVERS"),
-  Deno.env
-);
 
 const connector = new MongoDBConnector({
   database: envVars.DB_NAME,
