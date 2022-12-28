@@ -4,8 +4,16 @@ import { config } from "https://deno.land/std@0.167.0/dotenv/mod.ts";
 import { Database, MongoDBConnector } from "denodb";
 import { User } from "@/models/user.ts";
 import { usersRouter } from "@/routes/user.route.ts";
+
 const envVars = (await config()) || Deno.env.toObject();
 const dbUris = JSON.parse(envVars.DB_SERVERS);
+console.log(
+  dbUris,
+  envVars,
+  Deno.env.toObject(),
+  Deno.env.get("DB_SERVERS"),
+  Deno.env
+);
 
 const connector = new MongoDBConnector({
   database: envVars.DB_NAME,
