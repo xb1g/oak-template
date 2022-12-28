@@ -1,5 +1,5 @@
 import { Application, Router } from "oak";
-import "loadenv";
+import "https://deno.land/std@0.127.0/dotenv/load.ts";
 
 import { Database, MongoDBConnector } from "denodb";
 import { User } from "@/models/user.ts";
