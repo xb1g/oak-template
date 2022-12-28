@@ -4,15 +4,15 @@ import { User } from "../models/user.ts";
 export const usersRouter = new Router();
 
 usersRouter
-  .get("/users", async (ctx) => {
+  .get("/", async (ctx) => {
     const users = await User.all();
     ctx.response.body = users || [];
   })
-  .get("/users/:id", async (ctx) => {
+  .get("/:id", async (ctx) => {
     const user = await User.find(ctx.params.id);
     ctx.response.body = user;
   })
-  .post("/user", async (ctx) => {
+  .post("/", async (ctx) => {
     const body = await ctx.request.body({ type: "json" }).value;
     console.log(body);
     const user = await User.create({
@@ -20,7 +20,7 @@ usersRouter
     });
     ctx.response.body = user;
   })
-  .delete("/user/:id", async (ctx) => {
+  .delete("/:id", async (ctx) => {
     const user = await User.deleteById(ctx.params.id);
     ctx.response.body = user;
   });

@@ -9,8 +9,10 @@ const deployEnvs = Deno.env.toObject();
 let envVars = await config();
 
 if (deployEnvs.DENO_DEPLOYMENT_ID) {
+  console.log(deployEnvs);
   envVars = deployEnvs;
 }
+console.log(envVars);
 
 // if (Deno.env.toObject().ENV !== "development") {
 //   console.log("envVars", envVars);
@@ -48,7 +50,7 @@ db.sync();
 const app = new Application();
 const router = new Router();
 
-router.use(usersRouter.routes());
+router.use("/users", usersRouter.routes());
 
 router.get("/", (ctx) => {
   ctx.response.body = "Hello World From Deno Edge";
