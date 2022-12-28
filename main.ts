@@ -5,14 +5,7 @@ import { Database, MongoDBConnector } from "denodb";
 import { User } from "@/models/user.ts";
 import { usersRouter } from "@/routes/user.route.ts";
 
-const deployEnvs = Deno.env.toObject();
-let envVars = await config();
-
-if (deployEnvs.DENO_DEPLOYMENT_ID) {
-  console.log(deployEnvs);
-  envVars = deployEnvs;
-}
-console.log(envVars);
+const envVars = await config();
 
 // if (Deno.env.toObject().ENV !== "development") {
 //   console.log("envVars", envVars);
@@ -23,10 +16,10 @@ console.log(envVars);
 // }
 
 console.log("envVars", Deno.env.get("DB_SERVERS"));
-const dbUris = JSON.parse(envVars.DB_SERVERS);
+const dbUris = JSON.parse(envVars.DB_SERVERS || Deno.env.get("DB_SERVERS")!);
 
 const connector = new MongoDBConnector({
-  database: envVars.DB_NAME,
+  database: envVars.DB_NAME || Deno.env.get("DB_NAME")!,
   tls: true,
   servers: dbUris.map((uri: string) => {
     return {
@@ -35,9 +28,9 @@ const connector = new MongoDBConnector({
     };
   }),
   credential: {
-    username: envVars.DB_USERNAME,
-    password: envVars.DB_PASSWORD,
-    db: envVars.DB_NAME,
+    username: envVars.DB_USERNAME || Deno.env.get("DB_USERNAME")!,
+    password: envVars.DB_PASSWORD || Deno.env.get("DB_PASSWORD")!,
+    db: envVars.DB_NAME || Deno.env.get("DB_NAME")!,
     mechanism: "SCRAM-SHA-1",
   },
   db: envVars.DB_NAME,
