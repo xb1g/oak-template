@@ -1,0 +1,8 @@
+{
+  "imports": {
+    "@/": "./",
+    "oak": "https://deno.land/x/oak@v11.1.0/mod.ts",
+    "dotenv": "https://deno.land/x/dotenv/mod.ts",
+    "denodb": "https://deno.land/x/denodb@v1.1.0/mod.ts"
+  }
+}

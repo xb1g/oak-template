@@ -1,13 +1,11 @@
-import { Application, Router } from "https://deno.land/x/oak@v11.1.0/mod.ts";
+import { Application, Router } from "oak";
 import { config } from "https://deno.land/std@0.167.0/dotenv/mod.ts";
 
-import { Database, MongoDBConnector } from "https://deno.land/x/denodb/mod.ts";
-import { User } from "./models/user.ts";
-import { MongoClient } from "https://deno.land/x/mongo@v0.31.1/mod.ts";
+import { Database, MongoDBConnector } from "denodb";
+import { User } from "@/models/user.ts";
 
 const envVars = (await config()) || Deno.env;
 const dbUris = JSON.parse(envVars.DB_SERVERS);
-console.log(Deno.env.toObject());
 // const connector = new MongoDBConnector({
 //   uri:
 //     "mongodb+srv://xb1g:SecurePassword555@cluster0.karrdyx.mongodb.net/?retryWrites=true&w=majority" ||
