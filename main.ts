@@ -3,7 +3,7 @@ import { config } from "https://deno.land/std@0.167.0/dotenv/mod.ts";
 
 import { Database, MongoDBConnector } from "denodb";
 import { User } from "@/models/user.ts";
-
+import { usersRouter } from "@/routes/user.route.ts";
 const envVars = (await config()) || Deno.env;
 const dbUris = JSON.parse(envVars.DB_SERVERS);
 // const connector = new MongoDBConnector({
@@ -38,30 +38,11 @@ db.sync();
 const app = new Application();
 const router = new Router();
 
-router
-  .get("/", (ctx) => {
-    ctx.response.body = "Hello World From Deno Edge";
-  })
-  .get("/users", async (ctx) => {
-    const users = await User.all();
-    ctx.response.body = users || [];
-  })
-  .get("/users/:id", async (ctx) => {
-    const user = await User.find(ctx.params.id);
-    ctx.response.body = user;
-  })
-  .post("/user", async (ctx) => {
-    const body = await ctx.request.body({ type: "json" }).value;
-    console.log(body);
-    const user = await User.create({
-      data: body,
-    });
-    ctx.response.body = user;
-  })
-  .delete("/user/:id", async (ctx) => {
-    const user = await User.deleteById(ctx.params.id);
-    ctx.response.body = user;
-  });
+router.use(usersRouter.routes());
+
+router.get("/", (ctx) => {
+  ctx.response.body = "Hello World From Deno Edge";
+});
 
 app.use(router.routes());
 app.use(router.allowedMethods());
