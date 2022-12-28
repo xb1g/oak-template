@@ -10,6 +10,7 @@ const configEnv = await config();
 const denoEnv = Deno.env.toObject();
 
 const envVars = configEnv || denoEnv;
+console.log(denoEnv);
 // if (envVars === undefined || envVars === null) {
 //   envVars = {
 //     DB_SERVERS: Deno.env.get("DB_SERVERS"),
