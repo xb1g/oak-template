@@ -11,7 +11,7 @@ const envVars = (await config()) || {
   DB_USERNAME: Deno.env.get("DB_USERNAME"),
   DB_PASSWORD: Deno.env.get("DB_PASSWORD"),
 };
-console.log("envVars", envVars);
+console.log("envVars", Deno.env.get("DB_SERVERS"));
 const dbUris = JSON.parse(envVars.DB_SERVERS);
 
 const connector = new MongoDBConnector({
